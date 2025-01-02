@@ -2,34 +2,40 @@ from datetime import datetime
 
 
 class Report:
-    def __int__(self, report_id, user_id, title=None, content=None, riskyprofile=None, risklevel, created_at=None, updated_at=None, data=None):
+    def __int__(self, report_id, user_id=None, riskyprofile=None,created_at=None, title=None, content=None, risklevel=None, data=None):
         self.report_id = report_id
-        self.user_id = user_id  # Associate the report with a specific user
+
         if isinstance(data, dict):
+            self.user_id = data.get("user_id",user_id)
+            self.riskyprofile = data.get("riskyprofile", riskyprofile)
+            self.created_at = data.get("created_at", created_at or datetime.now().isoformat())
             self.title = data.get("title", title)
             self.content = data.get("content", content)
-            self.riskyprofile = data.get("riskyprofile", riskyprofile)
             self.risklevel = data.get("risklevel", risklevel)
-            self.created_at = data.get("created_at", created_at or datetime.now().isoformat())
-            self.updated_at = data.get("updated_at", updated_at or datetime.now().isoformat())
+            
+
         else:
+
+            self.user_id = user_id 
+            self.riskyprofile = riskyprofile
+            self.created_at = created_at or datetime.now().isoformat()
             self.title = title
             self.content = content
-            self.riskyprofile = riskyprofile
             self.risklevel = risklevel
-            self.created_at = created_at or datetime.now().isoformat()
-            self.updated_at = updated_at or datetime.now().isoformat()
+            
+
 
     def to_dic(self):
         return {
+            
             "report_id": self.report_id ,
             "user_id": self.user_id ,
+            "riskyprofile" : self.riskyprofile,
+            "created_at" : self.created_at,
             "title": self.title,
             "content" :self.content,
-            "riskyprofile" : self.riskyprofile,
-            "risklevel" : self.risklevel,
-            "created_at" : self.created_at,
-            "updated_at" : self.updated_at,
+            "risklevel" : self.risklevel
+
         }
 
     #Updating report details
