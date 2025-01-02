@@ -2,7 +2,7 @@ from datetime import datetime
 
 
 class Report:
-    def __int__(self, report_id, user_id=None, riskyprofile=None,created_at=None, title=None, content=None, risklevel=None, data=None):
+    def __init__(self, report_id, user_id=None, riskyprofile=None,created_at=None, title=None, content=None, risklevel=None, data=None):
         self.report_id = report_id
 
         if isinstance(data, dict):
@@ -27,7 +27,6 @@ class Report:
 
     def to_dic(self):
         return {
-            
             "report_id": self.report_id ,
             "user_id": self.user_id ,
             "riskyprofile" : self.riskyprofile,
@@ -39,8 +38,10 @@ class Report:
         }
 
     #Updating report details
-    def update(self,title=None,content=None):
-        pass
+    def update(self,data):
+        for key, value in data.items(): 
+            self[key]=value
+        
 
     #Reading report
     def read(self):
