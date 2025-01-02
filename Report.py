@@ -43,13 +43,14 @@ class Report:
             self[key]=value
         
 
-    #Reading report
-    def read(self):
-        pass
+    # #Reading report
+    # def read(self):
+    #     pass
 
     #Deleting report
-    def delete(report_id,reports):
-        if report_id in reports:
-            del reports[report_id]
-            return True
-        return False
+    
+    # def delete(report_id,reports):
+    #     if report_id in reports:
+    #         del reports[report_id]
+    #         return True
+    #     return False
