@@ -2,55 +2,35 @@ from datetime import datetime
 
 
 class Report:
-    def __init__(self, report_id, user_id=None, riskyprofile=None,created_at=None, title=None, content=None, risklevel=None, data=None):
-        self.report_id = report_id
+    def __init__(self, risk_profile=None,update=None, risk_level=None,is_reported=None, data=None):
+        
 
         if isinstance(data, dict):
-            self.user_id = data.get("user_id",user_id)
-            self.riskyprofile = data.get("riskyprofile", riskyprofile)
-            self.created_at = data.get("created_at", created_at or datetime.now().isoformat())
-            self.title = data.get("title", title)
-            self.content = data.get("content", content)
-            self.risklevel = data.get("risklevel", risklevel)
-            
+            self.risk_profile = data.get("risk_profile",risk_profile)
+            self.update = data.get("update", update or datetime.now().isoformat())
+            self.risk_level = int(data.get("risk_level", risk_level))
 
         else:
+            self.risk_profile = risk_profile 
+            self.update = update or datetime.now().isoformat()
+            self.risk_level = int(risk_level)
+        
+        if self.risk_level== -1:
+            self.is_reported = True
+        else: 
+            self.is_reported = False  
 
-            self.user_id = user_id 
-            self.riskyprofile = riskyprofile
-            self.created_at = created_at or datetime.now().isoformat()
-            self.title = title
-            self.content = content
-            self.risklevel = risklevel
-            
-
-
-    def to_dic(self):
+    def to_dict(self):           
         return {
-            "report_id": self.report_id ,
-            "user_id": self.user_id ,
-            "riskyprofile" : self.riskyprofile,
-            "created_at" : self.created_at,
-            "title": self.title,
-            "content" :self.content,
-            "risklevel" : self.risklevel
-
+            "risk_profile": self.risk_profile ,
+            "update": self.update ,
+            "risk_level" : self.risk_level,
+            "is_reported" : self.is_reported
         }
 
     #Updating report details
-    def update(self,data):
-        for key, value in data.items(): 
-            self[key]=value
-        
-
-    # #Reading report
-    # def read(self):
-    #     pass
-
-    #Deleting report
+    def update_level(self,data):
+        self.risk_level = data.get("risk_level")
+        self.update = datetime.now().isoformat()
     
-    # def delete(report_id,reports):
-    #     if report_id in reports:
-    #         del reports[report_id]
-    #         return True
-    #     return False
+        
